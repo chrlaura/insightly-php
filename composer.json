@@ -1,0 +1,23 @@
+{
+    "name": "chrlaura/insightly-php",
+    "description": "This library provides user friendly access to the version 2.2 REST API for Insightly",
+    "version": "0.1",
+    "type": "library",
+    "require": {
+        "php": ">=5.5",
+        "ext-curl": "*",
+        "guzzlehttp/guzzle": "6.2.3"
+    },
+    "authors": [
+        {
+            "name": "Christian Rasmussen",
+            "email": "chrlaura@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Insightly\\": "src/"
+        }
+    }
+}
