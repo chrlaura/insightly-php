@@ -45,7 +45,6 @@ class Insightly {
         $response = $this->httpClient->request('GET', $resource);
         if ($response->getStatusCode() === 200) {
             $contactArrays = json_decode($response->getBody(), true);
-            var_dump($contactArrays);
             foreach ($contactArrays as $contactArray) {
                 $contact = new Contact($contactArray);
                 $contacts[] = $contact;

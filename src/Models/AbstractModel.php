@@ -13,7 +13,9 @@ abstract class AbstractModel
 {
 
     function getOptional($key, $collection, $default = null) {
-        if(is_array($collection)) {
+        if($collection === null) {
+            return $default;
+        } else if(is_array($collection)) {
             return isset($collection[$key]) ? $collection[$key] : $default;
         } else if (is_object($collection)) {
             return isset($collection->$key) ? $collection->$key : $default;
