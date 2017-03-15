@@ -14,23 +14,23 @@ class Contact extends AbstractModel
     const ROUTE = "/Contacts";
 
     private $id;
-    private $salution;
+    private $salutation;
     private $firstName;
     private $lastName;
     private $contactInfos;
-    private $customFields;
     private $tags;
     private $addresses;
+    private $customFields;
 
     public function __construct(array $contactData) {
         $this->id = $this->getOptional("CONTACT_ID", $contactData, -1);
-        $this->salution = $this->getOptional("SALUTATION", $contactData, "");
+        $this->salutation = $this->getOptional("SALUTATION", $contactData, "");
         $this->firstName = $this->getOptional("FIRSTNAME", $contactData, "");
         $this->lastName = $this->getOptional("LASTNAME", $contactData, "");
         $this->contactInfos = $this->getOptional("CONTACTINFOS", $contactData, array());
-        $this->customFields = $this->getOptional("CUSTOMFIELDS", $contactData, array());
         $this->tags = $this->getOptional("TAGS", $contactData, array());
         $this->addresses = $this->getOptional("ADDRESSES", $contactData, array());
+        $this->customFields = $this->getOptional("CUSTOMFIELDS", $contactData, array());
     }
 
     /**
@@ -49,12 +49,36 @@ class Contact extends AbstractModel
         return $infoWithType;
     }
 
+    public function getSalutation() {
+        return $this->salutation;
+    }
+
+    public function getFirstName() {
+        return $this->firstName;
+    }
+
+    public function getLastName() {
+        return $this->lastName;
+    }
+
     public function getEmails() {
         return $this->getContactInfo(ContactInfo::EMAIL);
     }
 
     public function getPhones() {
         return $this->getContactInfo(ContactInfo::PHONE);
+    }
+
+    public function getAddresses() {
+        return $this->addresses;
+    }
+
+    public function getTags() {
+        return $this->tags;
+    }
+
+    public function getCustomFields() {
+        
     }
 
 }
