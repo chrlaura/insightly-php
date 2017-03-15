@@ -78,7 +78,7 @@ class Contact extends AbstractModel
     }
 
     public function getCustomFields() {
-        
+        return $this->customFields;
     }
 
 }
