@@ -1,6 +1,6 @@
 {
     "name": "chrlaura/insightly-php",
-    "description": "This library provides access to contacts in the version 2.2 REST API for Insightly",
+    "description": "This library is in beta and provides access to contacts in the version 2.2 (beta) REST API for Insightly",
     "version": "0.1",
     "type": "library",
     "require": {
