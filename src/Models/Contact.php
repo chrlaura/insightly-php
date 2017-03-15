@@ -8,8 +8,7 @@
 
 namespace Insightly\Models;
 
-
-class Contact
+class Contact extends AbstractModel
 {
 
     const ROUTE = "/Contacts";
@@ -21,15 +20,12 @@ class Contact
     private $contactInfos;
 
     public function __construct(array $contactData) {
-        $this->id = $this->carefullyGet("CONTACT_ID", $contactData, -1);
-        $this->salution = $this->carefullyGet("SALUTATION", $contactData, "");
-        $this->firstName = $this->carefullyGet("FIRSTNAME", $contactData, "");
-        $this->lastName = $this->carefullyGet("LASTNAME", $contactData, "");
-        $this->contactInfos = $this->carefullyGet("CONTACTINFOS", $contactData, array());
-    }
+        $this->id = $this->getOptional("CONTACT_ID", $contactData, -1);
+        $this->salution = $this->getOptional("SALUTATION", $contactData, "");
+        $this->firstName = $this->getOptional("FIRSTNAME", $contactData, "");
+        $this->lastName = $this->getOptional("LASTNAME", $contactData, "");
+        $this->contactInfos = $this->getOptional("CONTACTINFOS", $contactData, array());
 
-    private function carefullyGet($key, $array, $default = null) {
-        return isset($array[$key]) ? $array[$key] : $default;
     }
 
 }
