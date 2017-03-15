@@ -18,22 +18,6 @@ class Contact {
         $this->apiObject = $apiObject;
     }
 
-    /**
-     * Return an array of ContactInfo assoc arrays with a specific type
-     *
-     * @param $type
-     * @return array
-     */
-    public function getContactInfo($type) {
-        $infoWithType = array();
-        foreach ($this->apiObject["CONTACTINFOS"] as $contactInfo) {
-            if ($contactInfo[ContactInfo::TYPE] === $type) {
-                $infoWithType[] = $contactInfo;
-            }
-        }
-        return $infoWithType;
-    }
-
     public function setSalutation($salutation) {
         $this->apiObject["SALUTATION"] = $salutation;
         return $this;
@@ -61,6 +45,74 @@ class Contact {
 
     public function getLastName() {
         return $this->apiObject["LAST_NAME"];
+    }
+
+    public function getAllContactInfo() {
+        return $this->apiObject["CONTACTINFOS"];
+    }
+
+    public function setAllContactInfo($allContactInfo) {
+        $this->apiObject["CONTACTINFOS"] = $allContactInfo;
+        return $this;
+    }
+
+    /**
+     * Return an array of ContactInfo assoc arrays with a specific type
+     *
+     * @param $type
+     * @return array
+     */
+    public function getContactInfo($type) {
+        $infoWithType = array();
+        foreach ($this->getAllContactInfo() as $contactInfo) {
+            if ($contactInfo[ContactInfo::TYPE] === $type) {
+                $infoWithType[] = $contactInfo;
+            }
+        }
+        return $infoWithType;
+    }
+
+    public function addEmail($address, $label) {
+        $infoObj = ContactInfo::createObject(ContactInfo::EMAIL, $label, $address);
+        $contactInfo = $this->getAllContactInfo();
+        $contactInfo[] = $infoObj;
+        $this->setAllContactInfo($contactInfo);
+        return $this;
+    }
+
+    public function updateEmail($emailObject) {
+        // Abort if object does not have id
+        if (!isset($emailObject[ContactInfo::ID])) {
+            return $this;
+        }
+
+        $contactInfos = $this->getAllContactInfo();
+        foreach ($contactInfos as $index => $contactInfo) {
+            if (isset($contactInfo[ContactInfo::ID]) && $contactInfo[ContactInfo::ID] == $emailObject[ContactInfo::ID]) {
+                $contactInfos[$index] = $emailObject;
+                break;
+            }
+        }
+        $this->setAllContactInfo($contactInfos);
+        return $this;
+    }
+
+    public function deleteEmail($emailObject) {
+        // Abort if object does not have id
+        if (!isset($emailObject[ContactInfo::ID])) {
+            return $this;
+        }
+
+        $contactInfos = $this->getAllContactInfo();
+        foreach ($contactInfos as $index => $contactInfo) {
+            if (isset($contactInfo[ContactInfo::ID]) && $contactInfo[ContactInfo::ID] == $emailObject[ContactInfo::ID]) {
+                unset($contactInfos[$index]);
+            }
+        }
+        // Reorder keys after unsetting - otherwise Insightly API will have trouble unserializing the array
+        $contactInfos = array_values($contactInfos);
+        $this->setAllContactInfo($contactInfos);
+        return $this;
     }
 
     public function getEmails() {
@@ -102,4 +154,13 @@ class ContactInfo  {
     const WORK = "WORK";
     const PERSONAL = "PERSONAL";
     const HOME = "HOME";
+
+    public static function createObject($type, $label, $detail) {
+        $obj = [
+            self::TYPE => $type,
+            self::LABEL => $label,
+            self::DETAIL => $detail
+        ];
+        return $obj;
+    }
 }
