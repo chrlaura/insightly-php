@@ -42,7 +42,7 @@ class Insightly {
         $contacts = array();
 
         $resource = self::BASE_URL . $this->version . Contact::ROUTE;
-        $response = $this->httpClient->request('GET', $resource);
+        $response = $this->httpClient->get($resource);
         if ($response->getStatusCode() === 200) {
             $contactArrays = json_decode($response->getBody(), true);
             foreach ($contactArrays as $contactArray) {

@@ -8,29 +8,14 @@
 
 namespace Insightly\Models;
 
-class Contact extends AbstractModel
-{
+class Contact {
 
     const ROUTE = "/Contacts";
 
-    private $id;
-    private $salutation;
-    private $firstName;
-    private $lastName;
-    private $contactInfos;
-    private $tags;
-    private $addresses;
-    private $customFields;
+    private $apiObject;
 
-    public function __construct(array $contactData) {
-        $this->id = $this->getOptional("CONTACT_ID", $contactData, -1);
-        $this->salutation = $this->getOptional("SALUTATION", $contactData, "");
-        $this->firstName = $this->getOptional("FIRSTNAME", $contactData, "");
-        $this->lastName = $this->getOptional("LASTNAME", $contactData, "");
-        $this->contactInfos = $this->getOptional("CONTACTINFOS", $contactData, array());
-        $this->tags = $this->getOptional("TAGS", $contactData, array());
-        $this->addresses = $this->getOptional("ADDRESSES", $contactData, array());
-        $this->customFields = $this->getOptional("CUSTOMFIELDS", $contactData, array());
+    public function __construct(array $apiObject) {
+        $this->apiObject = $apiObject;
     }
 
     /**
@@ -41,7 +26,7 @@ class Contact extends AbstractModel
      */
     public function getContactInfo($type) {
         $infoWithType = array();
-        foreach ($this->contactInfos as $contactInfo) {
+        foreach ($this->apiObject["CONTACTINFOS"] as $contactInfo) {
             if ($contactInfo[ContactInfo::TYPE] === $type) {
                 $infoWithType[] = $contactInfo;
             }
@@ -49,16 +34,21 @@ class Contact extends AbstractModel
         return $infoWithType;
     }
 
+    public function setSalutation($salutation) {
+        $this->apiObject["SALUTATION"] = $salutation;
+        return $this;
+    }
+
     public function getSalutation() {
-        return $this->salutation;
+        return $this->apiObject["SALUTATION"];
     }
 
     public function getFirstName() {
-        return $this->firstName;
+        return $this->apiObject["FIRST_NAME"];
     }
 
     public function getLastName() {
-        return $this->lastName;
+        return $this->apiObject["LAST_NAME"];
     }
 
     public function getEmails() {
@@ -70,15 +60,19 @@ class Contact extends AbstractModel
     }
 
     public function getAddresses() {
-        return $this->addresses;
+        return $this->apiObject["ADRESSES"];
     }
 
     public function getTags() {
-        return $this->tags;
+        return $this->apiObject["TAGS"];
     }
 
     public function getCustomFields() {
-        return $this->customFields;
+        return $this->apiObject["CUSTOMFIELDS"];
+    }
+
+    public function getApiObject() {
+        return $this->apiObject;
     }
 
 }
