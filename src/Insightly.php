@@ -54,4 +54,10 @@ class Insightly {
         return $contacts;
     }
 
+    public function updateContact(Contact $contact) {
+        $resource = self::BASE_URL . $this->version . Contact::ROUTE;
+        $response = $this->httpClient->put($resource, ['json' => $contact->getApiObject()]);
+        return $response->getStatusCode() === 200;
+    }
+
 }
