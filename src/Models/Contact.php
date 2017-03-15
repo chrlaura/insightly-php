@@ -43,8 +43,20 @@ class Contact {
         return $this->apiObject["SALUTATION"];
     }
 
+    public function setFirstName($firstName) {
+        $this->apiObject["FIRST_NAME"] = $firstName;
+        return $this;
+    }
+
     public function getFirstName() {
         return $this->apiObject["FIRST_NAME"];
+    }
+
+    public function setLastName($lastName) {
+        if(!empty($lastName)) {
+            $this->apiObject["LAST_NAME"] = $lastName;
+        }
+        return $this;
     }
 
     public function getLastName() {
