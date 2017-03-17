@@ -18,6 +18,10 @@ class Contact {
         $this->apiObject = $apiObject;
     }
 
+    public function getId() {
+        return $this->apiObject["CONTACT_ID"];
+    }
+
     public function setSalutation($salutation) {
         $this->apiObject["SALUTATION"] = $salutation;
         return $this;
