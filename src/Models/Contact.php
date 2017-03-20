@@ -137,6 +137,17 @@ class Contact {
         return $this->getContactInfo(ContactInfo::EMAIL);
     }
 
+    public function getEmailsWithLabel($label) {
+        $emails = $this->getEmails();
+        $emailsWithLabel = [];
+        foreach ($emails as $email) {
+            if ($email[ContactInfo::LABEL] == $label) {
+                $emailsWithLabel[] = $email;
+            }
+        }
+        return $emailsWithLabel;
+    }
+
     public function addPhone($number, $label) {
         $infoObj = ContactInfo::create(ContactInfo::PHONE, $label, $number);
         $this->addContactInfo($infoObj);
