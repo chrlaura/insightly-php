@@ -79,6 +79,7 @@ class Contact {
     private function addContactInfo($contactInfo) {
         $allContactInfo = $this->getAllContactInfo();
         $allContactInfo[] = $contactInfo;
+        $this->setAllContactInfo($allContactInfo);
         return $this;
     }
 
