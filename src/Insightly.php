@@ -54,6 +54,19 @@ class Insightly {
         return $contacts;
     }
 
+    public function getContact($id) {
+        $contact = null;
+
+        $resource = self::BASE_URL . $this->version . Contact::ROUTE . '/' . $id;
+        $response = $this->httpClient->get($resource);
+        if ($response->getStatusCode() === 200) {
+            $contactJson = json_decode($response->getBody(), true);
+            $contact = new Contact($contactJson);
+        }
+
+        return $contact;
+    }
+
     public function updateContact(Contact $contact) {
         $resource = self::BASE_URL . $this->version . Contact::ROUTE;
         $response = $this->httpClient->put($resource, ['json' => $contact->getApiObject()]);
