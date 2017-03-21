@@ -69,8 +69,6 @@ class Contact {
         return $this;
     }
 
-    public function
-
     /**
      * Return an array of ContactInfo assoc arrays with a specific type
      *
