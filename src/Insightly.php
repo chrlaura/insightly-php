@@ -38,10 +38,10 @@ class Insightly {
         return $this->apiKey;
     }
 
-    public function getContacts() {
+    public function getContacts($top = 300, $skip = 0) {
         $contacts = array();
 
-        $resource = self::BASE_URL . $this->version . Contact::ROUTE;
+        $resource = self::BASE_URL . $this->version . Contact::ROUTE . "?top=$top&skip=$skip";
         $response = $this->httpClient->get($resource);
         if ($response->getStatusCode() === 200) {
             $contactArrays = json_decode($response->getBody(), true);

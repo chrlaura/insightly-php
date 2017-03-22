@@ -60,6 +60,15 @@ class Contact {
         return $this;
     }
 
+    public function getLinks() {
+        return $this->apiObject["LINKS"];
+    }
+
+    public function setLinks($links) {
+        $this->apiObject["LINKS"] = $links;
+        return $this;
+    }
+
     /**
      * Return an array of ContactInfo assoc arrays with a specific type
      *
@@ -79,6 +88,7 @@ class Contact {
     private function addContactInfo($contactInfo) {
         $allContactInfo = $this->getAllContactInfo();
         $allContactInfo[] = $contactInfo;
+        $this->setAllContactInfo($allContactInfo);
         return $this;
     }
 
@@ -339,4 +349,16 @@ class Tag {
         ];
         return $obj;
     }
+}
+
+class Link {
+    const ID = "LINK_ID";
+    const CONTACT_ID = "CONTACT_ID";
+    const OPPORTUNITY_ID = "OPPORTUNITY_ID";
+    const ORGANISATION_ID = "ORGANISATION_ID";
+    const PROJECT_ID = "PROJECT_ID";
+    const SECOND_PROJECT_ID = "SECOND_PROJECT_ID";
+    const SECOND_OPPORTUNITY_ID = "SECOND_OPPORTUNITY_ID";
+    const ROLE = "ROLE";
+    const DETAILS = "DETAILS";
 }
