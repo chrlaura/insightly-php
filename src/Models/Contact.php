@@ -69,6 +69,15 @@ class Contact {
         return $this;
     }
 
+    public function getBackground() {
+        return $this->apiObject["BACKGROUND"];
+    }
+
+    public function setBackground($background) {
+        $this->apiObject["BACKGROUND"] = $background;
+        return $this;
+    }
+
     /**
      * Return an array of ContactInfo assoc arrays with a specific type
      *
